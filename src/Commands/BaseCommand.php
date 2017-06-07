@@ -89,16 +89,16 @@ class BaseCommand extends Command
             $routesGenerator->generate();
         }
 
-        // if (!$this->isSkip('tests') and $this->commandData->getAddOn('tests')) {
-        //     $repositoryTestGenerator = new RepositoryTestGenerator($this->commandData);
-        //     $repositoryTestGenerator->generate();
+        if (!$this->isSkip('tests') and $this->commandData->getAddOn('tests')) {
+            $repositoryTestGenerator = new RepositoryTestGenerator($this->commandData);
+            $repositoryTestGenerator->generate();
 
-        //     $testTraitGenerator = new TestTraitGenerator($this->commandData);
-        //     $testTraitGenerator->generate();
+            $testTraitGenerator = new TestTraitGenerator($this->commandData);
+            $testTraitGenerator->generate();
 
-        //     $apiTestGenerator = new APITestGenerator($this->commandData);
-        //     $apiTestGenerator->generate();
-        // }
+            $apiTestGenerator = new APITestGenerator($this->commandData);
+            $apiTestGenerator->generate();
+        }
     }
 
     public function generateScaffoldItems()
@@ -182,23 +182,23 @@ class BaseCommand extends Command
             ];
         }
 
-        // foreach ($this->commandData->relations as $relation) {
-        //     $fileFields[] = [
-        //         'type'     => 'relation',
-        //         'relation' => $relation->type.','.implode(',', $relation->inputs),
-        //     ];
-        // }
+        foreach ($this->commandData->relations as $relation) {
+            $fileFields[] = [
+                'type'     => 'relation',
+                'relation' => $relation->type.','.implode(',', $relation->inputs),
+            ];
+        }
 
-        // $path = config('KoTA206.laravel_generator.path.schema_files', base_path('resources/model_schemas/'));
+        $path = config('KoTA206.laravel_generator.path.schema_files', base_path('resources/model_schemas/'));
 
-        // $fileName = $this->commandData->modelName.'.json';
+        $fileName = $this->commandData->modelName.'.json';
 
-        // if (file_exists($path.$fileName) && !$this->confirmOverwrite($fileName)) {
-        //     return;
-        // }
-        // FileUtil::createFile($path, $fileName, json_encode($fileFields, JSON_PRETTY_PRINT));
-        // $this->commandData->commandComment("\nSchema File saved: ");
-        // $this->commandData->commandInfo($fileName);
+        if (file_exists($path.$fileName) && !$this->confirmOverwrite($fileName)) {
+            return;
+        }
+        FileUtil::createFile($path, $fileName, json_encode($fileFields, JSON_PRETTY_PRINT));
+        $this->commandData->commandComment("\nSchema File saved: ");
+        $this->commandData->commandInfo($fileName);
     }
 
     /**
@@ -221,33 +221,33 @@ class BaseCommand extends Command
      *
      * @return array
      */
-    // public function getOptions()
-    // {
-    //     return [
-    //         ['fieldsFile', null, InputOption::VALUE_REQUIRED, 'Fields input as json file'],
-    //         ['jsonFromGUI', null, InputOption::VALUE_REQUIRED, 'Direct Json string while using GUI interface'],
-    //         ['tableName', null, InputOption::VALUE_REQUIRED, 'Table Name'],
-    //         ['fromTable', null, InputOption::VALUE_NONE, 'Generate from existing table'],
-    //         ['save', null, InputOption::VALUE_NONE, 'Save model schema to file'],
-    //         ['primary', null, InputOption::VALUE_REQUIRED, 'Custom primary key'],
-    //         ['prefix', null, InputOption::VALUE_REQUIRED, 'Prefix for all files'],
-    //         ['paginate', null, InputOption::VALUE_REQUIRED, 'Pagination for index.blade.php'],
-    //         ['skip', null, InputOption::VALUE_REQUIRED, 'Skip Specific Items to Generate (migration,model,controllers,api_controller,scaffold_controller,repository,requests,api_requests,scaffold_requests,routes,api_routes,scaffold_routes,views,tests,menu,dump-autoload)'],
-    //         ['datatables', null, InputOption::VALUE_REQUIRED, 'Override datatables settings'],
-    //         ['views', null, InputOption::VALUE_REQUIRED, 'Specify only the views you want generated: index,create,edit,show'],
-    //         ['relations', null, InputOption::VALUE_NONE, 'Specify if you want to pass relationships for fields'],
-    //     ];
-    // }
+    public function getOptions()
+    {
+        return [
+            ['fieldsFile', null, InputOption::VALUE_REQUIRED, 'Fields input as json file'],
+            ['jsonFromGUI', null, InputOption::VALUE_REQUIRED, 'Direct Json string while using GUI interface'],
+            ['tableName', null, InputOption::VALUE_REQUIRED, 'Table Name'],
+            ['fromTable', null, InputOption::VALUE_NONE, 'Generate from existing table'],
+            ['save', null, InputOption::VALUE_NONE, 'Save model schema to file'],
+            ['primary', null, InputOption::VALUE_REQUIRED, 'Custom primary key'],
+            ['prefix', null, InputOption::VALUE_REQUIRED, 'Prefix for all files'],
+            ['paginate', null, InputOption::VALUE_REQUIRED, 'Pagination for index.blade.php'],
+            ['skip', null, InputOption::VALUE_REQUIRED, 'Skip Specific Items to Generate (migration,model,controllers,api_controller,scaffold_controller,repository,requests,api_requests,scaffold_requests,routes,api_routes,scaffold_routes,views,tests,menu,dump-autoload)'],
+            ['datatables', null, InputOption::VALUE_REQUIRED, 'Override datatables settings'],
+            ['views', null, InputOption::VALUE_REQUIRED, 'Specify only the views you want generated: index,create,edit,show'],
+            ['relations', null, InputOption::VALUE_NONE, 'Specify if you want to pass relationships for fields'],
+        ];
+    }
 
     /**
      * Get the console command arguments.
      *
      * @return array
      */
-    // protected function getArguments()
-    // {
-    //     return [
-    //         ['model', InputArgument::REQUIRED, 'Singular Model name'],
-    //     ];
-    // }
+    protected function getArguments()
+    {
+        return [
+            ['model', InputArgument::REQUIRED, 'Singular Model name'],
+        ];
+    }
 }

@@ -27,17 +27,17 @@ class CommandData
     public $config;
 
     /** @var GeneratorField[] */
-    //public $fields = [];
+    public $fields = [];
 
     /** @var GeneratorFieldRelation[] */
-    //public $relations = [];
+    public $relations = [];
 
     /** @var Command */
     public $commandObj;
 
     /** @var array */
-    //public $dynamicVars = [];
-    //public $fieldNamesMapping = [];
+    public $dynamicVars = [];
+    public $fieldNamesMapping = [];
 
     /** @var CommandData */
     protected static $instance = null;
@@ -106,10 +106,10 @@ class CommandData
         $this->config->setOption($option, $value);
     }
 
-    // public function addDynamicVariable($name, $val)
-    // {
-    //     $this->dynamicVars[$name] = $val;
-    // }
+    public function addDynamicVariable($name, $val)
+    {
+        $this->dynamicVars[$name] = $val;
+    }
 
     public function getFields()
     {
@@ -132,53 +132,53 @@ class CommandData
 
         $this->addPrimaryKey();
 
-        // while (true) {
-        //     $fieldInputStr = $this->commandObj->ask('Field: (name db_type html_type options)', '');
+        while (true) {
+            $fieldInputStr = $this->commandObj->ask('Field: (name db_type html_type options)', '');
 
-        //     if (empty($fieldInputStr) || $fieldInputStr == false || $fieldInputStr == 'exit') {
-        //         break;
-        //     }
+            if (empty($fieldInputStr) || $fieldInputStr == false || $fieldInputStr == 'exit') {
+                break;
+            }
 
-        //     if (!GeneratorFieldsInputUtil::validateFieldInput($fieldInputStr)) {
-        //         $this->commandError('Invalid Input. Try again');
-        //         continue;
-        //     }
+            if (!GeneratorFieldsInputUtil::validateFieldInput($fieldInputStr)) {
+                $this->commandError('Invalid Input. Try again');
+                continue;
+            }
 
-        //     $validations = $this->commandObj->ask('Enter validations: ', false);
-        //     $validations = ($validations == false) ? '' : $validations;
+            $validations = $this->commandObj->ask('Enter validations: ', false);
+            $validations = ($validations == false) ? '' : $validations;
 
-        //     if ($this->getOption('relations')) {
-        //         $relation = $this->commandObj->ask('Enter relationship (Leave Black to skip):', false);
-        //     } else {
-        //         $relation = '';
-        //     }
+            if ($this->getOption('relations')) {
+                $relation = $this->commandObj->ask('Enter relationship (Leave Black to skip):', false);
+            } else {
+                $relation = '';
+            }
 
-        //     $this->fields[] = GeneratorFieldsInputUtil::processFieldInput(
-        //         $fieldInputStr,
-        //         $validations
-        //     );
+            $this->fields[] = GeneratorFieldsInputUtil::processFieldInput(
+                $fieldInputStr,
+                $validations
+            );
 
-        //     if (!empty($relation)) {
-        //         $this->relations[] = GeneratorFieldRelation::parseRelation($relation);
-        //     }
-        // }
+            if (!empty($relation)) {
+                $this->relations[] = GeneratorFieldRelation::parseRelation($relation);
+            }
+        }
 
         $this->addTimestamps();
     }
 
-    // private function addPrimaryKey()
-    // {
-    //     $primaryKey = new GeneratorField();
-    //     if ($this->getOption('primary')) {
-    //         $primaryKey->name = $this->getOption('primary');
-    //     } else {
-    //         $primaryKey->name = 'id';
-    //     }
-    //     $primaryKey->parseDBType('increments');
-    //     $primaryKey->parseOptions('s,f,p,if,ii');
+    private function addPrimaryKey()
+    {
+        $primaryKey = new GeneratorField();
+        if ($this->getOption('primary')) {
+            $primaryKey->name = $this->getOption('primary');
+        } else {
+            $primaryKey->name = 'id';
+        }
+        $primaryKey->parseDBType('increments');
+        $primaryKey->parseOptions('s,f,p,if,ii');
 
-    //     $this->fields[] = $primaryKey;
-    // }
+        $this->fields[] = $primaryKey;
+    }
 
     private function addTimestamps()
     {
@@ -229,13 +229,13 @@ class CommandData
                     }
                 }
             } else {
-                //                $fileContents = $this->getOption('jsonFromGUI');
-//                $jsonData = json_decode($fileContents, true);
-//                $this->inputFields = array_merge($this->inputFields, GeneratorFieldsInputUtil::validateFieldsFile($jsonData['fields']));
-//                $this->config->overrideOptionsFromJsonFile($jsonData);
-//                if (isset($jsonData['migrate'])) {
-//                    $this->config->forceMigrate = $jsonData['migrate'];
-//                }
+                               $fileContents = $this->getOption('jsonFromGUI');
+                               $jsonData = json_decode($fileContents, true);
+                               $this->inputFields = array_merge($this->inputFields, GeneratorFieldsInputUtil::validateFieldsFile($jsonData['fields']));
+                               $this->config->overrideOptionsFromJsonFile($jsonData);
+                               if (isset($jsonData['migrate'])) {
+                               $this->config->forceMigrate = $jsonData['migrate'];
+                               }
             }
         } catch (Exception $e) {
             $this->commandError($e->getMessage());

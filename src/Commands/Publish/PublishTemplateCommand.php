@@ -54,7 +54,7 @@ class PublishTemplateCommand extends PublishBaseCommand
     {
         $templateType = config('KoTA206.laravel_generator.templates', 'core-templates');
 
-        $templatesPath = base_path('vendor/KoTA206labs/'.$templateType.'/templates/scaffold');
+        $templatesPath = base_path('vendor/KoTA206/'.$templateType.'/templates/scaffold');
 
         return $this->publishDirectory($templatesPath, $this->templatesDir.'/scaffold', 'KoTA206-generator-templates/scaffold', true);
     }
