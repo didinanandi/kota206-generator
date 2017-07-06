@@ -40,6 +40,10 @@
             "src/helpers.php"
         ]
     },
+    "config":{
+        "type": "composer",
+        "secure-http": false
+    }
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
