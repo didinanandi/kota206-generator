@@ -40,6 +40,12 @@
             "src/helpers.php"
         ]
     },
+    
+    {
+    "type": "composer",
+    "url": "http://packagist.org/packages.json"
+    },
+
     "autoload-dev": {
         "psr-4": {
             "Tests\\": "tests/"
