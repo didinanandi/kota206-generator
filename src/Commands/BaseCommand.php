@@ -170,15 +170,19 @@ class BaseCommand extends Command
 
         foreach ($this->commandData->fields as $field) {
             $fileFields[] = [
-                'roleName'     => $field->roleName,
-                'quantity'     => $field->quantity,
-                'roleAkses'    => $field->roleAkses,
-                'taskName'     => $field->taskName,
-                //'searchable' => $field->isSearchable,
-                //'fillable'   => $field->isFillable,
-                //'primary'    => $field->isPrimary,
-                //'inForm'     => $field->inForm,
-                //'inIndex'    => $field->inIndex,
+//                 'roleName'     => $field->roleName,
+//                 'quantity'     => $field->quantity,
+//                 'roleAkses'    => $field->roleAkses,
+//                 'taskName'     => $field->taskName,
+                'name'        => $field->name,
+                'dbType'      => $field->dbInput,
+                'htmlType'    => $field->htmlInput,
+                'validations' => $field->validations,
+                'searchable' => $field->isSearchable,
+                'fillable'   => $field->isFillable,
+                'primary'    => $field->isPrimary,
+                'inForm'     => $field->inForm,
+                'inIndex'    => $field->inIndex,
             ];
         }
 
