@@ -14,8 +14,8 @@ class CommandData
     public static $COMMAND_TYPE_API_SCAFFOLD = 'api_scaffold';
 
     /** @var Role Name and Quantity */
-    public $roleName;
-    public $quantity;
+    // public $roleName;
+    // public $quantity;
 
     /** Task Akses */
     public $taskName;
@@ -166,19 +166,19 @@ class CommandData
         $this->addTimestamps();
     }
 
-    private function addPrimaryKey()
-    {
-        $primaryKey = new GeneratorField();
-        if ($this->getOption('primary')) {
-            $primaryKey->name = $this->getOption('primary');
-        } else {
-            $primaryKey->name = 'id';
-        }
-        $primaryKey->parseDBType('increments');
-        $primaryKey->parseOptions('s,f,p,if,ii');
+    // private function addPrimaryKey()
+    // {
+    //     $primaryKey = new GeneratorField();
+    //     if ($this->getOption('primary')) {
+    //         $primaryKey->name = $this->getOption('primary');
+    //     } else {
+    //         $primaryKey->name = 'id';
+    //     }
+    //     $primaryKey->parseDBType('increments');
+    //     $primaryKey->parseOptions('s,f,p,if,ii');
 
-        $this->fields[] = $primaryKey;
-    }
+    //     $this->fields[] = $primaryKey;
+    // }
 
     private function addTimestamps()
     {
